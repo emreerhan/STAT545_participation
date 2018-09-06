@@ -1,4 +1,4 @@
-# stat545_md_explorer
+# Exploration
 
 A respository for exploring version control and markdown for STAT545 at UBC.
 
