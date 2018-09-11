@@ -1,5 +1,5 @@
-# stat545_md_explorer
+# STAT545 Participation
 
-A respository for exploring version control and markdown for STAT545 at UBC.
+A respository for recording my participation for STAT545 at UBC.
 
 This README is now more descriptive.
