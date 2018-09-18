@@ -1,7 +1,9 @@
 ---
 title: 'cm005: `dplyr` Exercise'
-output: html_notebook
-editor_options: 
+output:
+  html_document:
+    keep_md: true
+editor_options:
   chunk_output_type: inline
 ---
 
@@ -13,25 +15,50 @@ Change the file output to both html and md _documents_ (not notebook).
 
 1. Load the `gapminder` and `tidyverse` packages. Hint: `suppressPackageStartupMessages()`!
     - This loads `dplyr`, too.
+    ```{r}
+    suppressPackageStartupMessages(library('gapminder'))
+    suppressPackageStartupMessages(library('tidyverse'))
+    ```
 2. `knit` the document. 
 
 ## `select()`
 
 1. Make a data frame containing the columns `year`, `lifeExp`, `country` from the gapminder data, in that order.
+    ```{r}
+    select(gapminder, c(year, lifeExp, country))
+    ```
 
 2. Select all variables, from `country` to `lifeExp`. 
+    ```{r}
+    select(gapminder, country:lifeExp)
+    ```
 
 3. Select all variables, except `lifeExp`.
+    ```{r}
+    select(gapminder, -lifeExp)
+    ```
 
 4. Put `continent` first. Hint: use the `everything()` function.
+    ```{r}
+    select(gapminder, continent, everything())
+    ```
 
 5. Rename `continent` to `cont`.
+    ```{r}
+    rename(gapminder, cont=continent)
+    ```
 
 ## `arrange()`
 
 1. Order by year.
+    ```{r}
+    arrange(gapminder, year)
+    ```
 
 2. Order by year, in descending order.
+    ```{r}
+    arrange(gapminder, desc(year))
+    ```
 
 3. Order by year, then by life expectancy.
 
