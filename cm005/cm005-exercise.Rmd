@@ -61,18 +61,31 @@ Change the file output to both html and md _documents_ (not notebook).
     ```
 
 3. Order by year, then by life expectancy.
+    ```{r}
+    arrange(gapminder, year, lifeExp)
+    ```
 
 ## Piping, `%>%`
 
 Note: think of `%>%` as the word "then"!
 
 1. Combine `select()` Task 1 with `arrange()` Task 3.
+    ```{r}
+    data = gapminder %>%
+      select(continent, year, lifeExp) %>% 
+      arrange(desc(year))
+    ```
 
 ## `filter()`
 
 1. Only take data with population greater than 100 million.
+    ```{r}
+    gapminder %>%
+      filter(pop > 1e8)
+    ```
 
 2. Of those, only take data from Asia.
+
 
 ## git stuff (Optional)
 
@@ -102,6 +115,12 @@ Your task is to use metaprogramming to check whether a response (like the one ab
 # Relational/Comparison and Logical Operators in R
 
 1. Find all entries of Canada and Algeria occuring in the '60s. 
+    ```{r}
+    gapminder %>%
+      filter((country == "Canada" | country == "Algeria") & year >= 1960 & year < 1970)
+    gapminder %>%
+      filter(country %in% c("Canada", "Algeria") & year %in% 1960:1970)
+    ```
 
 2. Find all entries of Canada, and entries of Algeria occuring in the '60s. 
 3. Find all entries _not_ including Canada and Algeria.
