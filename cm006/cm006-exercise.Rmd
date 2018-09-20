@@ -45,15 +45,27 @@ ggplot(gapminder, aes(x=lifeExp, y=gdpPercap)) +
 Notice the "metaprogramming" again!
 
 4. You _must_ remember to put the aesthetic mappings in the `aes` function! What happens if you forget?
-
+```{r}
+ggplot(gapminder, x=lifeExp, y=gdpPercap) +
+  geom_point()
+```
 
 
 5. Put the x-axis on a log scale, first by transforming the x variable. 
     - Note: `ggplot2` does some data wrangling and computations itself! We don't always have to modify the data frame.
+```{r}
+ggplot(gapminder, aes(x=lifeExp, y=log(gdpPercap))) + 
+  geom_point()
+```
 
 
 
 6. Try again, this time by changing the _scale_ (this way is better).
+```{r}
+ggplot(gapminder, aes(lifeExp, gdpPercap)) +
+  geom_point() +
+  scale_y_log10()
+```
 
 
 
@@ -76,20 +88,32 @@ Let's build a histogram of life expectancy.
 | Grammar Component     | Specification |
 |-----------------------|---------------|
 | __data__              | `gapminder` |
-| __aesthetic mapping__ |  |
-| __geometric object__  |  |
-| scale                 |  |
-| statistical transform |  |
+| __aesthetic mapping__ | `x` |
+| __geometric object__  | histogram |
+| scale                 | linear |
+| statistical transform | none |
 
 2. Build the histogram of life expectancy.
-
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  geom_histogram()
+```
 
 
 3. Change the number of bins to 50.
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  geom_histogram(bins = 50)
+```
 
 
 
 4. Instead of a histogram, let's create a kernel density plot.
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  geom_histogram(aes(y=..density..)) +
+  geom_density()
+```
 
 
 
@@ -107,13 +131,16 @@ Let's make _box plots_ of population for each continent. Note: y-axis is much be
 | Grammar Component     | Specification |
 |-----------------------|---------------|
 | __data__              | `gapminder` |
-| __aesthetic mapping__ |  |
-| __geometric object__  |  |
-| scale                 |  |
-| statistical transform |  |
+| __aesthetic mapping__ | `x` and `y` |
+| __geometric object__  | boxplot |
+| scale                 | log-y |
+| statistical transform | 5-number summary |
 
 2. Initiate the `ggplot` call, with the log y scale, and store it in the variable `a`. Print out `a`.
-
+```{r}
+a = ggplot(gapminder, aes(continent, pop)) +
+  scale_y_log10()
+```
 
 
 3. Add the boxplot geom to `a`.
