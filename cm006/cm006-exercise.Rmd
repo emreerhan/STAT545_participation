@@ -32,7 +32,10 @@ Let's look at a _scatterplot_ of `gdpPercap` vs. `lifeExp`.
 | facetting             | none |
 
 2. Populate the data and aesthetic mapping in `ggplot`. What is returned? What's missing?
-
+```{r}
+ggplot(gapminder, aes(x=lifeExp, y=gdpPercap)) + 
+  geom_point()
+```
 
 
 3. Add the missing component as a _layer_.
