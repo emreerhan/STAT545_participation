@@ -8,6 +8,10 @@ editor_options:
 In this worksheet, we'll be exploring various plot types (i.e., geometric objects), only using the `x` and `y` aesthetics (and `group`).
 
 1. To get started, load the `tidyverse` and `gapminder` R packages. 
+```{r}
+library(tidyverse)
+library(gapminder)
+```
 
 
 ## Scatterplot
@@ -20,12 +24,12 @@ Let's look at a _scatterplot_ of `gdpPercap` vs. `lifeExp`.
 | Grammar Component     | Specification |
 |-----------------------|---------------|
 | __data__              | `gapminder` |
-| __aesthetic mapping__ |  |
-| __geometric object__  |  |
-| scale                 |  |
-| statistical transform |  |
-| coordinate system     |  |
-| facetting             |  |
+| __aesthetic mapping__ | `x` and `y`  |
+| __geometric object__  | point |
+| scale                 | linear |
+| statistical transform | none |
+| coordinate system     | rectangular |
+| facetting             | none |
 
 2. Populate the data and aesthetic mapping in `ggplot`. What is returned? What's missing?
 
