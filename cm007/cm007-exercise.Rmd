@@ -1,11 +1,15 @@
 ---
 title: "cm007 Exercises: Exploring Aesthetic Mappings"
-output: html_notebook
+output: github_document
 editor_options: 
   chunk_output_type: inline
 ---
 
-
+```{r}
+library(gapminder)
+library(ggplot2)
+library(tidyverse)
+```
 
 # Beyond the x and y aesthetics
 
@@ -20,17 +24,43 @@ Switch focus to exploring aesthetic mappings, instead of geoms.
 
 List of shapes can be found [at the bottom of the `scale_shape` documentation](https://ggplot2.tidyverse.org/reference/scale_shape.html).
 
+```{r}
+gvsl = ggplot(gapminder, aes(gdpPercap, lifeExp)) + 
+  scale_x_log10()
+gvsl + geom_point(aes(shape = continent), alpha = 0.2)
+```
+
+```{r}
+# Each shape number is a shape
+gvsl + geom_point(shape = 7)
+gvsl + geom_point(pch = 7)
+```
+
 ## Colour
 
 Make a scatterplot. Then:
 
 - Try colour as categorical variable.
+```{r}
+gvsl + geom_point(aes(colour = continent))
+```
+
 - Try `colour` and `color`. 
 - Try colour as numeric variable.
     - Try `trans="log10"` for log scale.
+```{r}
+gvsl + geom_point(aes(colour = pop)) +
+  scale_colour_continuous(trans = "log10")
+gvsl + geom_point(aes(colour = lifeExp > 60))
+```
 
 
 Make a line plot of `gdpPercap` over time for all countries. Colour by `lifeExp > 60` (remember that `lifeExp` looks bimodal?)
+
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  geom_histogram(aes(fill=continent))
+```
 
 
 Try adding colour to a histogram. How is this different?
@@ -38,6 +68,11 @@ Try adding colour to a histogram. How is this different?
 ## Facetting
 
 Make histograms of `gdpPercap` for each continent. Try the `scales` and `ncol` arguments. 
+```{r}
+ggplot(gapminder, aes(lifeExp)) +
+  facet_wrap( ~ continent) +
+  geom_histogram()
+```
 
 Remove Oceania. Add another variable: `lifeExp > 60`. 
 
