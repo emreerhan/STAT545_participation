@@ -1,7 +1,9 @@
 ---
-title: "cm006 Exercises: Exploring Geometric Objects"
-output: html_notebook
-editor_options: 
+title: 'cm006 Exercises: Exploring Geometric Objects'
+output:
+  html_document:
+    df_print: paged
+editor_options:
   chunk_output_type: inline
 ---
 
@@ -46,8 +48,8 @@ Notice the "metaprogramming" again!
 
 4. You _must_ remember to put the aesthetic mappings in the `aes` function! What happens if you forget?
 ```{r}
-ggplot(gapminder, x=lifeExp, y=gdpPercap) +
-  geom_point()
+# ggplot(gapminder, x=lifeExp, y=gdpPercap) +
+#   geom_point()
 ```
 
 
