@@ -14,32 +14,40 @@ suppressPackageStartupMessages(library(tidyverse))
 Make a tibble of letters, their order in the alphabet, and then a pasting of the two columns together.
 
 ```{r}
+tibble(let = letters,
+       num = 1:length(letters),
+       comb = paste(let, num))
 
 ```
 
 Make a tibble of three names and commute times.
 
 ```{r}
-
+tribble(
+  ~name, ~time,
+  "Frank", 30,
+  "Lisa", 15,
+  "Fred", 40
+)
 ```
 
 
 Write the `iris` data frame as a `csv`. 
 
 ```{r}
-
+write_csv(iris, "iris.csv")
 ```
 
 Write the `iris` data frame to a file delimited by a dollar sign. 
 
 ```{r}
-
+write_delim(iris, "iris.txt", delim = "$")
 ```
 
 Read the dollar-delimited `iris` data to a tibble.
 
 ```{r}
-
+read_delim("iris.txt", delim = "$")
 ```
 
 Read these three LOTR csv's, saving them to `lotr1`, `lotr2`, and `lotr3`:
@@ -49,6 +57,9 @@ Read these three LOTR csv's, saving them to `lotr1`, `lotr2`, and `lotr3`:
 - https://github.com/jennybc/lotr-tidy/blob/master/data/The_Return_Of_The_King.csv
 
 ```{r}
+lotr1 = read_csv('The_Fellowship_Of_The_Ring.csv')
+lotr2 = read_csv('The_Two_Towers.csv')
+lotr3 = read_csv('The_Return_Of_The_King.csv')
 
 ```
 
@@ -61,13 +72,14 @@ This function is useful for making untidy data tidy (so that computers can more 
 1. Combine the three LOTR untidy tables (`lotr1`, `lotr2`, `lotr3`) to a single untidy table by stacking them.  
 
 ```{r}
-
+lotr_untidy = bind_rows(lotr1, lotr2, lotr3)
 ```
 
 2. Convert to tidy. Also try this by specifying columns as a range, and with the `contains()` function.
 
 ```{r}
-
+gather(lotr_untidy, key = "Gender", value = "Word", Female, Male)
+# gather(lotr_untidy, key = "Gender", value = "Word", Female:Male)
 ```
 
 3. Try again (bind and tidy the three untidy data frames), but without knowing how many tables there are originally. 
@@ -92,13 +104,19 @@ lotr_tidy <- read_csv("https://raw.githubusercontent.com/jennybc/lotr-tidy/maste
 Get word counts across "Race". Then try "Gender". 
 
 ```{r}
-
+spread(lotr_tidy, key = "Race", value = "Words")
 ```
 
 Now try combining race and gender. Use `unite()` from `tidyr` instead of `paste()`. 
 
 ```{r}
+lotr_tidy %>%
+  unite(Race_Gender, Race, Gender) %>%
+  spread(key = "Race_Gender", value = "Words")
 
+lotr_tidy %>%
+  mutate(x = rnorm(nrow(lotr_tidy))) %>%
+  spread(key = "Gender", value = "x")
 ```
 
 ## Other `tidyr` goodies
@@ -108,6 +126,15 @@ Check out the Examples in the documentation to explore the following.
 `expand` vs `complete` (trim vs keep everything). Together with `nesting`. Check out the Examples in the `expand` documentation.
 
 ```{r}
+iexpand(mtrcars, vs, vyl)
+df = tibble(
+  year = c(2010, 2010, 2010, 2010, 2012, 2012, 2012,
+  qtr = c(1,2, 3, 4, 1, 2, 3, 4)),
+  return = rnorm(7)
+)
+df %>% expand(year, qtr)
+df %>% expand(year = full_seq(year, 1), qtr)
+df %>% complete(year = full_seq(year, 1))
 
 ```
 
