@@ -18,7 +18,10 @@ This worksheet is a condensed version of Jenny's stat545.com functions [part1](h
 Let's demo the syntax of function-making.
 
 ```{r}
-
+square = function(x) {
+  return(x^2)
+}
+square(10)
 ```
 
 ## Motivating example: max minus min.
@@ -34,7 +37,7 @@ max(gapminder$lifeExp) - min(gapminder$lifeExp)
 Exercise: turn this into a function! i.e., write a function that returns the max minus min of a vector. Try it out on the gapminder variables.
 
 ```{r}
-max_minus_min <- FILL_THIS_IN
+max_minus_min <- function(x) return(max(x) - min(x))
 ```
 
 We'll be building on this. Development philosophy [widely attributed to the Spotify development team](http://blog.fastmonkeys.com/?utm_content=bufferc2d6e&utm_medium=social&utm_source=twitter.com&utm_campaign=buffer):
@@ -49,7 +52,7 @@ Check your function using your own eyeballs:
 - Apply to a random uniform vector. Do you get meaningful results?
 
 ```{r}
-
+max_minus_min(c(1:10))
 ```
 
 Let's formalize this testing with the `testthat` package. `expect_*()` functions:
@@ -64,8 +67,11 @@ Add another check to the following unit test, based on the uniform random number
 ```{r}
 test_that("Simple cases work", {
     expect_equal(max_minus_min(1:10), 9)
-    FILL_THIS_IN
+    expect_lt(max_minus_min(runif(100)), 1)
 })
+
+expect_equal(max_minus_min(1:10), 9)
+expect_lt(max_minus_min(runif(100)), 1)
 ```
 
 ## Try and break your function
@@ -103,7 +109,7 @@ Your turn:  Use two methods:
 
 ```{r}
 mmm1 <- function(x) {
-    FILL_THIS_IN
+    stopifnot(is.numeric(x))
     max(x) - min(x)
 }
 ```
@@ -115,7 +121,7 @@ mmm1 <- function(x) {
 ```{r}
 mmm2 <- function(x) {
     if (!is.numeric(x)) {
-        FILL_THIS_IN
+        stop("The x parameter must be numeric")
     }
     max(x) - min(x)
 }
@@ -211,13 +217,13 @@ qd2 <- function(x, probs=c(0,1)) {
 There are other arguments to `quantile`, like `type`, that are not used all that much. Put them in as ellipses:
 
 ```{r}
-qd2 <- function(x, probs=c(0,1), na.rm=FALSE, FILL_THIS_IN) {
+qd2 <- function(x, probs=c(0,1), na.rm=FALSE, ...) {
     stopifnot(is.numeric(x))
     if (length(x) == 0) {
         warning("You inputted a length-0 x. Expecting length >=1. Returning NULL.")
         return(NULL)
     } 
-    qvec <- quantile(x, probs, na.rm = na.rm, FILL_THIS_IN)
+    qvec <- quantile(x, probs, na.rm = na.rm, ...)
     max(qvec) - min(qvec)
 }
 ```
