@@ -48,11 +48,13 @@ Examples of problems encountered with factors. (ideas came from [R Bloggers](htt
 
 ```{r}
 iris %>% 
-  mutate(Species = ifelse(Species == "versicolor", "vers", Species))
+  mutate(Species = ifelse(Species == "versicolor", "vers", Species)) %>%
+  str()
 ```
 
 ```{r}
 c(iris$Species, "setosa")
+as.character(iris$Species)
 ```
 
 
@@ -92,7 +94,9 @@ Try binding by row `lotr1` and `lotr2`:
 Which one is more lenient? Which would you prefer?
 
 ```{r}
-
+rbind(lotr1, lotr2)
+bind_rows(lotr1, lotr2)
+as.character(5)
 ```
 
 
@@ -137,7 +141,12 @@ Exercise: get rid of the unused factor levels for country and continent in diffe
 - Re-defining the variable as a factor
 
 ```{r}
-
+gap_small %>%
+  droplevels() %>%
+  str()
+gap_small %>%
+  mutate(continent = fct_drop(continent)) %>%
+  str()
 ```
 
 
@@ -186,7 +195,10 @@ ggplot(gap_asia_2007, aes(lifeExp, country)) + geom_point()
 Let's use `fct_reorder()` to reorder the countries of `gap_asia_2007` by life Expectancy, and produce the same plot:
 
 ```{r, fig.width=2, fig.height=1}
-
+gap_asia_2007 %>%
+  mutate(country = fct_reorder(country, lifeExp)) %>%
+  ggplot(aes(lifeExp, country)) +
+  geom_point()
 ```
 
 What about when life Expectancy is not unique? Example: life expectancy of each continent:
