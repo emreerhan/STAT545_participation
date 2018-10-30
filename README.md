@@ -16,6 +16,7 @@ A respository for recording my participation for STAT545 at UBC.
 * [cm011](https://github.com/emreerhan/STAT545_participation/tree/master/cm011)
 * [cm012](https://github.com/emreerhan/STAT545_participation/tree/master/cm012)
 * [cm013](https://github.com/emreerhan/STAT545_participation/tree/master/cm013)
+* [cm014](https://github.com/emreerhan/STAT545_participation/tree/master/cm014)
 
 ## STAT547
 * [cm101](https://github.com/emreerhan/STAT545_participation/tree/master/cm101)
