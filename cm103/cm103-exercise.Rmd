@@ -70,7 +70,10 @@ Example:
 2. Use what you know about R to write code that extracts a vector of the first elements of each vector contained in `wesanderson`.
 
 ```{r}
-YOUR_CODE_HERE
+str(wesanderson)
+x = character(0)
+for (i in 1:length(wesanderson)) x[i] = wesanderson[[i]][1]
+x
 ```
 
 `str()` is not always useful! Try checking the structure of `got_chars` (= Game of Thrones characters):
@@ -85,7 +88,8 @@ str(got_chars)
 1. `str()`: embrace `list.len` and `max.level`
 
 ```{r}
-str(got_chars)
+str(got_chars, list.len=4, max.level=2)
+str(got_chars[[1]])
 ```
 
 2. Interactive exploration: `View()` and `listviewer::jsonedit(..., mode = "view")`
@@ -118,13 +122,15 @@ Toy example 1: without using vectorization, take the square root of the followin
 
 ```{r}
 x <- 1:10
-map(FILL_THIS_IN, FILL_THIS_IN)
+sqrt(x)
+map(x, sqrt)
 ```
 
 Toy example 2 (functions on-the-fly): without using vectorization, square each component of `x`:
 
 ```{r}
-map(FILL_THIS_IN, FILL_THIS_IN)
+square = function(x) x^2
+map(x, square)
 ```
 
 Want a vector to be returned? Must specify the `typeof()` of the vector. Use `map_dbl()` to specify an output vector of type "double" for the above (check out the documentation `?map` for the acceptable vector types):
@@ -147,7 +153,12 @@ map_chr(x, str_c, "potato.", sep="-")
     - Use the ` ``[`` ` function if you're feeling daring.
 
 ```{r}
-YOUR_CODE_HERE
+vec1 <- function(x) x[1]
+map_chr(wesanderson, vec1)
+## Method 2: head
+map_chr(wesanderson, head, n=1)
+## Method 3:
+map_chr(wesanderson, `[`, 1)
 ```
 
 2. Check that each character's list entry in `got_chars` has the same names as everyone else (that is, list component names, not character names). Here's one way to do it:
@@ -183,7 +194,10 @@ map_chr(wesanderson, 1) # %>% unname()
 Note: each character's list entry has a component named `titles` as the 9th entry.
 
 ```{r}
-YOUR_CODE_HERE
+got_chars %>% 
+    map("titles")
+got_chars %>% 
+    map(9)
 ```
 
 2. For the `got_chars` data:
@@ -194,6 +208,8 @@ YOUR_CODE_HERE
 
 ```{r}
 desired_info <- c("name", "born")
+map(got_chars, `[`, desired_info) %>% head()
+map_dfr(got_chars, `[`, desired_info)
 ```
 
 Note: as Jenny says, it's always safer (from a programming perspective) to work with output that's more predictable. The following would be safer, and is still readable:
