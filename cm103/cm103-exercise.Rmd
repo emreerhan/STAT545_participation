@@ -53,8 +53,8 @@ Examples:
 ```
 
 ```{r}
-commute <- c(40, 20, 35, 15)
-person <- c("Parveen", "Leo", "Shawn", "Emmotions")
+commute = c(40, 20, 35, 15)
+person = c("Parveen", "Leo", "Shawn", "Emmotions")
 str_c(person, " takes ", commute, " minutes to commute to work.")
 ```
 
@@ -79,7 +79,7 @@ x
 `str()` is not always useful! Try checking the structure of `got_chars` (= Game of Thrones characters):
 
 ```{r}
-str(got_chars)
+#str(got_chars)
 ```
 
 
@@ -121,7 +121,7 @@ Note:
 Toy example 1: without using vectorization, take the square root of the following vector:
 
 ```{r}
-x <- 1:10
+x = 1:10
 sqrt(x)
 map(x, sqrt)
 ```
@@ -129,6 +129,7 @@ map(x, sqrt)
 Toy example 2 (functions on-the-fly): without using vectorization, square each component of `x`:
 
 ```{r}
+#map(x, function(w) w^2)
 square = function(x) x^2
 map(x, square)
 ```
@@ -137,6 +138,7 @@ Want a vector to be returned? Must specify the `typeof()` of the vector. Use `ma
 
 ```{r}
 map_dbl(x, sqrt)
+map_chr(x, sqrt)
 ```
 
 Does your function have other arguments? You can specify them afterwards in the ellipses (`...`).
@@ -153,7 +155,9 @@ map_chr(x, str_c, "potato.", sep="-")
     - Use the ` ``[`` ` function if you're feeling daring.
 
 ```{r}
-vec1 <- function(x) x[1]
+## Method 1
+vec1 = function(x) x[1]
+
 map_chr(wesanderson, vec1)
 ## Method 2: head
 map_chr(wesanderson, head, n=1)
@@ -167,7 +171,6 @@ map_chr(wesanderson, `[`, 1)
     3. Then, apply the `table()` function.
 
 ```{r}
-YOUR_CODE_HERE
 ```
 
 
@@ -179,7 +182,8 @@ We can do the subsetting much easier with these shortcuts: just replace function
 - name you'd like to subset by.
 
 ```{r}
-map_chr(wesanderson, 1) # %>% unname()
+map_chr(wesanderson, 1) %>%
+    unname
 ```
 
 
@@ -207,9 +211,10 @@ got_chars %>%
 - What happens when we switch to `map_dfr` instead of `map`? How about `map_dfc`?
 
 ```{r}
-desired_info <- c("name", "born")
+desired_info = c("name", "born")
 map(got_chars, `[`, desired_info) %>% head()
 map_dfr(got_chars, `[`, desired_info)
+
 ```
 
 Note: as Jenny says, it's always safer (from a programming perspective) to work with output that's more predictable. The following would be safer, and is still readable:
@@ -220,6 +225,14 @@ got_chars %>% {
         name = map_chr(., "name"),
         born = map_chr(., "born")
     )
+}
+got_chars %>% 
+    tibble(
+        name = map_chr(., "name"),
+        born = map_chr(., "born")
+    )
+got_chars %>% {
+    
 }
 ```
 
@@ -234,4 +247,3 @@ got_chars %>% {
     )
 }
 ```
-
