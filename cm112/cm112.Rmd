@@ -219,13 +219,14 @@ __Together__:
 2. Inspect its `str()`ucture, `class()`, and `names()`.
 
 ```{r}
-site <- GET("PUT_URL_HERE")
+site <- GET("www.google.com")
 ```
 
 3. What's the `$status_code`? How about the `$content`?
 
 ```{r}
-
+site$status_code
+site$content
 ```
 
 4. Try the function versions: `status_code()` and `content()`. 
